@@ -6,12 +6,14 @@ interface Drink {
   idDrink: string;
   strDrink: string;
   strDrinkThumb: string;
+  strCategory: string;
 }
 
 const App = () => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [drinks, setDrinks] = useState<Drink[]>([]);
+  const [select, setSelect] = useState<String>("All");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -52,20 +54,42 @@ const App = () => {
       <h1 className="text-xl font-bold text-center py-10">
         Data Fetching in React
       </h1>
+      <div className="flex gap-2">
+        <button
+          onClick={() => setSelect("Cocktail")}
+          className=" bg-blue-400 text-white text-lg rounded-lg px-5 py-2"
+        >
+          Cocktail
+        </button>
+        <button
+          onClick={() => setSelect("Ordinary Drink")}
+          className=" bg-blue-400 text-white text-lg rounded-lg px-5 py-2"
+        >
+          Ordinary Drink
+        </button>
+        <button
+          onClick={() => setSelect("All")}
+          className=" bg-blue-400 text-white text-lg rounded-lg px-5 py-2"
+        >
+          All
+        </button>
+      </div>
       <ul className="px-10">
-        {drinks.map((drink) => {
-          return (
-            <div key={drink.idDrink} className="flex flex-col">
-              <h1 className=" text-xl py-5">{drink.strDrink}</h1>
+        {drinks
+          .filter((drink) => select === "All" || drink.strCategory === select)
+          .map((drink) => (
+            <div key={drink.idDrink} className="flex flex-col py-5">
+              <h1 className="text-xl py-2">{drink.strDrink}</h1>
               <img
                 src={drink.strDrinkThumb}
-                className=" rounded-xl"
+                className="rounded-xl"
                 width="284"
                 height="284"
+                alt={drink.strDrink}
               />
+              <p>{drink.strCategory}</p>
             </div>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );
