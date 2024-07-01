@@ -74,7 +74,7 @@ const App = () => {
           All
         </button>
       </div>
-      <ul className="px-10">
+      <div className="px-10">
         {drinks
           .filter((drink) => select === "All" || drink.strCategory === select)
           .map((drink) => (
@@ -90,7 +90,7 @@ const App = () => {
               <p>{drink.strCategory}</p>
             </div>
           ))}
-      </ul>
+      </div>
     </div>
   );
 };
